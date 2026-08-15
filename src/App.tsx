@@ -86,7 +86,7 @@ export default function App() {
             {/* ── Watermark ── */}
             <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center md:left-44">
               <img src="/marketrader-logo.png" alt="" aria-hidden="true"
-                   className="w-[480px] max-w-[60vw] opacity-[0.04] select-none" />
+                   className="w-[480px] max-w-[60vw] opacity-[0.35] select-none" />
             </div>
             <IndexBar />
             <main className="relative z-10 pb-20 md:pb-6">
