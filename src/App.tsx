@@ -38,13 +38,8 @@ function Sidebar() {
     <aside className="hidden md:flex md:flex-col md:w-44 shrink-0 sticky top-0 h-screen
                       bg-[#0B0D13] border-r border-[#252B3D]">
       {/* ── Logo ── */}
-      <div className="h-10 flex items-center px-3 border-b border-[#252B3D] shrink-0">
-        <div className="flex items-center gap-2">
-          <span className="w-5 h-5 rounded flex items-center justify-center bg-[#F5A623] text-black text-[10px] font-black leading-none select-none">
-            財
-          </span>
-          <span className="text-[#C8D1E8] font-semibold text-sm tracking-tight">財自機器</span>
-        </div>
+      <div className="h-14 flex items-center justify-center px-3 border-b border-[#252B3D] shrink-0">
+        <img src="/marketrader-logo.png" alt="MarketRader" className="h-10 w-auto object-contain" />
       </div>
 
       {/* ── Nav ── */}
@@ -87,9 +82,14 @@ export default function App() {
       <BrowserRouter>
         <div className="min-h-screen flex bg-[#0B0D13] text-[#C8D1E8]">
           <Sidebar />
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 relative">
+            {/* ── Watermark ── */}
+            <div className="pointer-events-none fixed inset-0 z-0 flex items-center justify-center md:left-44">
+              <img src="/marketrader-logo.png" alt="" aria-hidden="true"
+                   className="w-[480px] max-w-[60vw] opacity-[0.04] select-none" />
+            </div>
             <IndexBar />
-            <main className="pb-20 md:pb-6">
+            <main className="relative z-10 pb-20 md:pb-6">
               <Routes>
                 <Route path="/" element={<MarketPage />} />
                 <Route path="/sectors" element={<HomePage />} />
