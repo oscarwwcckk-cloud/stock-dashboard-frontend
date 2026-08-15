@@ -1,6 +1,7 @@
 import { STATIC, fetchStatic, fetchApi } from './dataClient'
 import type {
   StockSearchItem, StockDetailResponse, RSHistoryResponse, StocksIndexResponse,
+  OhlcResponse,
 } from '../types'
 
 // 靜態模式：一次載入 stocks_index.json，之後前端過濾（記憶化）
@@ -36,3 +37,9 @@ export const fetchRSHistory = (ticker: string): Promise<RSHistoryResponse> =>
   STATIC
     ? fetchStatic(`stock_${ticker.toUpperCase()}_rs_history.json`)
     : fetchApi(`/api/stocks/${ticker}/rs-history`)
+
+// 個股與 ETF 共用同一 OHLC 路徑（PriceHistory 兩者皆有）
+export const fetchOhlc = (ticker: string): Promise<OhlcResponse> =>
+  STATIC
+    ? fetchStatic(`stock_${ticker.toUpperCase()}_ohlc.json`)
+    : fetchApi(`/api/stocks/${ticker}/ohlc`)

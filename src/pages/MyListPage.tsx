@@ -69,7 +69,7 @@ export default function MyListPage() {
           </div>
 
           {isFetching && stocks.length === 0
-            ? <div className="text-slate-500 animate-pulse text-sm">Loading...</div>
+            ? <div className="text-slate-500 animate-pulse text-sm">載入中...</div>
             : stocks.length > 0 && <StockTable stocks={stocks} />}
         </>
       )}

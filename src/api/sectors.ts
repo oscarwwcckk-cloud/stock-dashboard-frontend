@@ -1,7 +1,7 @@
 import { STATIC, fetchStatic, fetchApi } from './dataClient'
 import type { SectorListResponse, SectorDetailResponse, SectorHistoryResponse } from '../types'
 
-export const fetchSectors = (sortBy = 'rs_score'): Promise<SectorListResponse> =>
+export const fetchSectors = (sortBy = 'rs_rating'): Promise<SectorListResponse> =>
   STATIC
     ? fetchStatic('sectors.json')
     : fetchApi('/api/sectors', { sort_by: sortBy })

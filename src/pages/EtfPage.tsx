@@ -18,14 +18,14 @@ export default function EtfPage() {
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-white">ETF 板塊排名</h1>
-        {data?.date && <p className="text-slate-500 text-sm mt-1">Last updated: {data.date}</p>}
+        {data?.date && <p className="text-slate-500 text-sm mt-1">更新時間：{data.date}</p>}
         <p className="text-slate-500 text-xs mt-1">追蹤真實板塊 ETF 的 RS Rating（1–99，與個股同基準可比）。點 ETF 看內部成分股依 RS 排名。</p>
       </div>
 
-      {isLoading && <div className="text-slate-500 animate-pulse text-sm">Loading ETFs...</div>}
+      {isLoading && <div className="text-slate-500 animate-pulse text-sm">載入ETF中...</div>}
       {error && (
         <div className="text-red-400 text-sm bg-red-950 border border-red-800 rounded-lg px-4 py-3">
-          Failed to load ETF data.
+          載入ETF資料失敗。
         </div>
       )}
 
@@ -40,7 +40,7 @@ export default function EtfPage() {
 
           <section className="space-y-2">
             <h2 className="text-slate-400 text-xs uppercase tracking-wider font-semibold">
-              Thematic — {thematic.length} 檔主題 ETF
+              主題型 — {thematic.length} 檔主題 ETF
             </h2>
             <EtfRankTable etfs={thematic} />
           </section>

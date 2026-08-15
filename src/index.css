@@ -1,9 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
+
+/* ── Design tokens: Futu × TradingView ─────────────────────────────────── */
+:root {
+  --tv-bg:       #0B0D13;
+  --tv-panel:    #131720;
+  --tv-raised:   #1C2030;
+  --tv-border:   #252B3D;
+  --tv-text:     #C8D1E8;
+  --tv-muted:    #5C6480;
+  --tv-blue:     #4E8AFF;
+  --tv-up:       #26C6A6;
+  --tv-down:     #EF5465;
+  --tv-orange:   #F5A623;
+}
+
+/* ── Override Tailwind mono stack → JetBrains Mono ─────────────────────── */
+@theme {
+  --font-family-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+}
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: ui-sans-serif, system-ui, sans-serif;
+html, body {
+  font-family: 'Inter', 'Noto Sans TC', ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background-color: #020617;
+  background-color: var(--tv-bg);
+  color: var(--tv-text);
+}
+
+/* ── TradingView-style scrollbar ────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--tv-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--tv-raised); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Panel eyebrow label ─────────────────────────────────────────────────── */
+.panel-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tv-muted);
 }

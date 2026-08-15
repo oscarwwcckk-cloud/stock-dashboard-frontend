@@ -34,7 +34,7 @@ export default function SearchBar() {
         type="text"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Search ticker or company..."
+        placeholder="搜尋代碼或公司..."
         className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
         onFocus={() => results.length > 0 && setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}

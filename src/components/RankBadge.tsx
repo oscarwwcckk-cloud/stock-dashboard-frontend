@@ -8,15 +8,15 @@ export default function RankBadge({ rank, total, label = 'sectors' }: Props) {
   if (!rank) return null
 
   const pct = rank / total
-  const color =
-    pct <= 0.1 ? 'bg-emerald-500 text-white' :
-    pct <= 0.3 ? 'bg-emerald-700 text-emerald-100' :
-    pct <= 0.6 ? 'bg-yellow-700 text-yellow-100' :
-    'bg-red-800 text-red-100'
+  const cls =
+    pct <= 0.1 ? 'text-[#26C6A6] bg-[#26C6A6]/10 border-[#26C6A6]/25'
+    : pct <= 0.3 ? 'text-[#26C6A6] bg-[#26C6A6]/8  border-[#26C6A6]/15'
+    : pct <= 0.6 ? 'text-[#F5A623] bg-[#F5A623]/8  border-[#F5A623]/20'
+    : 'text-[#EF5465] bg-[#EF5465]/8  border-[#EF5465]/20'
 
   return (
-    <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-bold ${color}`}>
-      #{rank} of {total} {label}
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded border text-xs font-mono font-semibold ${cls}`}>
+      #{rank} / {total} {label}
     </span>
   )
 }

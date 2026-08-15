@@ -20,12 +20,12 @@ export default function HeatmapPage() {
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-white">板塊熱力圖</h1>
-        {data?.date && <p className="text-slate-500 text-sm mt-1">Last updated: {data.date}</p>}
+        {data?.date && <p className="text-slate-500 text-sm mt-1">更新時間：{data.date}</p>}
         <p className="text-slate-500 text-xs mt-1">磚塊底色為當日漲跌幅（綠漲紅跌，越飽和越大）。點磚看該 ETF 成分股。</p>
       </div>
 
-      {isLoading && <div className="text-slate-500 animate-pulse text-sm">Loading...</div>}
-      {error && <div className="text-red-400 text-sm bg-red-950 border border-red-800 rounded-lg px-4 py-3">Failed to load.</div>}
+      {isLoading && <div className="text-slate-500 animate-pulse text-sm">載入中...</div>}
+      {error && <div className="text-red-400 text-sm bg-red-950 border border-red-800 rounded-lg px-4 py-3">載入失敗。</div>}
 
       {data && (
         <>
@@ -34,7 +34,7 @@ export default function HeatmapPage() {
             <Heatmap tiles={toTiles('spdr')} />
           </section>
           <section className="space-y-2">
-            <h2 className="text-slate-400 text-xs uppercase tracking-wider font-semibold">Thematic</h2>
+            <h2 className="text-slate-400 text-xs uppercase tracking-wider font-semibold">主題型</h2>
             <Heatmap tiles={toTiles('thematic')} />
           </section>
         </>

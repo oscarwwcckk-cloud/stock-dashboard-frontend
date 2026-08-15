@@ -16,6 +16,7 @@ export interface SectorItem {
   sector_key: string
   sector_name: string
   benchmark: string
+  rs_rating: number | null
   rs_score: number | null
   rs_rank: number | null
   rs_1d: number | null
@@ -169,6 +170,20 @@ export interface RSHistoryResponse {
   ticker: string
   benchmark: string
   data: RSHistoryPoint[]
+}
+
+export interface OhlcBar {
+  date: string
+  open: number | null
+  high: number | null
+  low: number | null
+  close: number | null
+  volume: number | null
+}
+
+export interface OhlcResponse {
+  ticker: string
+  bars: OhlcBar[]
 }
 
 // ── Market Analysis ──────────────────────────────────────────────────────────
