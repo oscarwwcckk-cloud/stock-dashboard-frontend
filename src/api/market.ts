@@ -1,5 +1,5 @@
 import { STATIC, fetchStatic, fetchApi } from './dataClient'
-import type { MarketAnalysisResponse, MarketHistoryResponse, OhlcResponse } from '../types'
+import type { MarketAnalysisResponse, MarketHistoryResponse, OhlcResponse, MarketBreadthResponse } from '../types'
 
 export const fetchMarketAnalysis = (): Promise<MarketAnalysisResponse> =>
   STATIC
@@ -15,3 +15,8 @@ export const fetchMarketOhlc = (indexKey: string, days = 120): Promise<OhlcRespo
   STATIC
     ? fetchStatic(`market_ohlc_${indexKey}.json`)
     : fetchApi(`/api/market/ohlc/${indexKey}`, { days })
+
+export const fetchMarketBreadth = (): Promise<MarketBreadthResponse> =>
+  STATIC
+    ? fetchStatic('market_breadth.json')
+    : fetchApi('/api/market/breadth')

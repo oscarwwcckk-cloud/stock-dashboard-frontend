@@ -252,3 +252,22 @@ export interface HealthResponse {
   sector_count: number
   stock_count: number
 }
+
+// ── Market Breadth (Finviz) ──────────────────────────────────────────────────
+
+export interface BreadthMetric {
+  pct: number | null
+  count: number | null
+}
+
+export interface MarketBreadthResponse {
+  advancing: BreadthMetric
+  declining: BreadthMetric
+  new_high: BreadthMetric
+  new_low: BreadthMetric
+  above_sma50: BreadthMetric
+  below_sma50: BreadthMetric
+  above_sma200: BreadthMetric
+  below_sma200: BreadthMetric
+  fetched_at: string | null
+}

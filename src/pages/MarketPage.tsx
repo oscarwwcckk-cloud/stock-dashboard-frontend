@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
-import { fetchMarketAnalysis, fetchMarketOhlc } from '../api/market'
-import type { MarketAnalysisEntry } from '../types'
+import { fetchMarketAnalysis, fetchMarketOhlc, fetchMarketBreadth } from '../api/market'
+import type { MarketAnalysisEntry, BreadthMetric } from '../types'
 import { fmtPrice, fmtPct, pctColor } from '../utils/format'
 import CandleChart from '../components/CandleChart'
 
@@ -36,6 +36,98 @@ function maLabel(above: number | null) {
   if (above === 0) return <span className="text-[#EF5465] text-xs font-mono">▼ 下方</span>
   return <span className="text-[#5C6480] text-xs">—</span>
 }
+
+// ── Market Breadth Bar ────────────────────────────────────────────────────────
+
+function BreadthBlock({
+  leftLabel, left, rightLabel, right,
+}: {
+  leftLabel: string
+  left: BreadthMetric
+  rightLabel: string
+  right: BreadthMetric
+}) {
+  const leftPct = left.pct ?? 0
+  const rightPct = right.pct ?? 0
+  const total = leftPct + rightPct || 100
+
+  return (
+    <div className="bg-[#131720] border border-[#252B3D] p-3 flex-1 min-w-[180px]">
+      <div className="flex justify-between text-[10px] font-mono mb-2">
+        <span className="text-[#26C6A6] font-semibold">{leftLabel}</span>
+        <span className="text-[#EF5465] font-semibold">{rightLabel}</span>
+      </div>
+      <div className="flex items-end justify-between gap-2 mb-2">
+        <div>
+          <div className="text-[#26C6A6] text-sm font-bold font-mono">
+            {left.pct != null ? `${left.pct.toFixed(1)}%` : '—'}
+          </div>
+          {left.count != null && (
+            <div className="text-[#5C6480] text-[10px] font-mono">({left.count.toLocaleString()})</div>
+          )}
+        </div>
+        <div className="text-right">
+          <div className="text-[#EF5465] text-sm font-bold font-mono">
+            {right.pct != null ? `${right.pct.toFixed(1)}%` : '—'}
+          </div>
+          {right.count != null && (
+            <div className="text-[#5C6480] text-[10px] font-mono">({right.count.toLocaleString()})</div>
+          )}
+        </div>
+      </div>
+      <div className="h-1.5 rounded-full overflow-hidden flex bg-[#1C2030]">
+        <div
+          className="bg-[#26C6A6] h-full transition-all"
+          style={{ width: `${(leftPct / total) * 100}%` }}
+        />
+        <div
+          className="bg-[#EF5465] h-full transition-all"
+          style={{ width: `${(rightPct / total) * 100}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
+function MarketBreadthBar() {
+  const { data, isLoading } = useQuery({
+    queryKey: ['market-breadth'],
+    queryFn: fetchMarketBreadth,
+    staleTime: 10 * 60 * 1000,
+    refetchInterval: 15 * 60 * 1000,
+  })
+
+  return (
+    <div className="bg-[#0F1117] border border-[#252B3D] p-4">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-[#C8D1E8] text-sm font-semibold">市場廣度</span>
+        <div className="flex items-center gap-2">
+          <span className="text-[#5C6480] text-[10px] font-mono">NYSE + Nasdaq + AMEX · 來源 Finviz</span>
+          {isLoading && <span className="text-[#5C6480] text-[10px] animate-pulse font-mono">載入中...</span>}
+          {data?.fetched_at && !isLoading && (
+            <span className="text-[#5C6480] text-[10px] font-mono">
+              更新 {new Date(data.fetched_at).toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit' })}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex flex-wrap gap-3">
+        {data ? (
+          <>
+            <BreadthBlock leftLabel="上漲 Adv" left={data.advancing} rightLabel="下跌 Dec" right={data.declining} />
+            <BreadthBlock leftLabel="新高 NH" left={data.new_high} rightLabel="新低 NL" right={data.new_low} />
+            <BreadthBlock leftLabel="SMA50 上方" left={data.above_sma50} rightLabel="SMA50 下方" right={data.below_sma50} />
+            <BreadthBlock leftLabel="SMA200 上方" left={data.above_sma200} rightLabel="SMA200 下方" right={data.below_sma200} />
+          </>
+        ) : !isLoading ? (
+          <div className="text-[#5C6480] text-xs font-mono">廣度數據暫不可用</div>
+        ) : null}
+      </div>
+    </div>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function IndexHistoryChart({ indexKey }: { indexKey: string }) {
   const { data } = useQuery({
@@ -247,6 +339,8 @@ export default function MarketPage() {
       {data && (
         <>
           <MarketStatusBanner indices={data.indices} />
+
+          <MarketBreadthBar />
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {data.indices.map(idx => (
