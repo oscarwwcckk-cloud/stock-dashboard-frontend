@@ -24,11 +24,11 @@ export default function SectorPage() {
   })
 
   if (isLoading) {
-    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#5C6480] animate-pulse font-mono">載入中...</div>
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#787B86] animate-pulse font-mono">載入中...</div>
   }
 
   if (!detail) {
-    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#EF5465]">找不到板塊。</div>
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#F23645]">找不到板塊。</div>
   }
 
   const chartData = history?.data.map(d => ({ date: d.date, value: d.rs_score })) ?? []
@@ -58,7 +58,7 @@ export default function SectorPage() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <RankBadge rank={detail.rs_rank} total={20} label="個板塊" />
-            <span className="text-xs px-1.5 py-0.5 rounded font-mono bg-[#4E8AFF]/10 text-[#4E8AFF] border border-[#4E8AFF]/20">
+            <span className="text-xs px-1.5 py-0.5 rounded font-mono bg-[#2962FF]/10 text-[#2962FF] border border-[#2962FF]/20">
               vs {detail.benchmark}
             </span>
             <span className="text-slate-500 text-xs">{detail.constituent_count} 支成分股</span>
@@ -76,7 +76,7 @@ export default function SectorPage() {
       </div>
 
       {chartData.length > 0 && (
-        <div className="bg-[#131720] border border-[#252B3D] p-4">
+        <div className="bg-[#1E222D] border border-[#2A2E39] p-4">
           <h2 className="panel-label mb-3">90日綜合 RS vs {detail.benchmark}</h2>
           <RSChart data={chartData} label="RS Score" referenceValue={0} />
         </div>

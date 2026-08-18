@@ -11,25 +11,24 @@ export default function IndexBar() {
   })
 
   return (
-    <div className="h-10 flex items-center bg-[#0B0D13] border-b border-[#252B3D] px-4">
-      <div className="flex overflow-x-auto no-scrollbar divide-x divide-[#252B3D]">
+    <div className="h-9 flex items-center bg-[#131722] border-b border-[#2A2E39] px-4 shrink-0">
+      <div className="flex overflow-x-auto no-scrollbar divide-x divide-[#2A2E39]">
         {data?.indices.map(idx => {
           const up = (idx.change_pct ?? 0) >= 0
           return (
             <div key={idx.key}
-                 className="shrink-0 flex items-center gap-2.5 px-4 first:pl-0">
-              {/* trend dot */}
-              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${up ? 'bg-[#26C6A6]' : 'bg-[#EF5465]'}`} />
-              <span className="text-[#5C6480] text-xs font-mono font-semibold">{idx.key}</span>
-              <span className="text-[#C8D1E8] text-sm font-mono font-semibold tabular-nums">
+                 className="shrink-0 flex items-center gap-2 px-4 first:pl-0">
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${up ? 'bg-[#089981]' : 'bg-[#F23645]'}`} />
+              <span className="text-[#787B86] text-[11px] font-semibold tracking-wide">{idx.key}</span>
+              <span className="text-[#D1D4DC] text-[12px] font-mono font-semibold tabular-nums">
                 {fmtPrice(idx.price)}
               </span>
-              <span className={`text-xs font-mono tabular-nums ${up ? 'text-[#26C6A6]' : 'text-[#EF5465]'}`}>
+              <span className={`text-[11px] font-mono tabular-nums ${up ? 'text-[#089981]' : 'text-[#F23645]'}`}>
                 {fmtPct(idx.change_pct)}
               </span>
               {idx.change_5d != null && (
-                <span className={`text-[10px] font-mono tabular-nums opacity-60 ${
-                  (idx.change_5d ?? 0) >= 0 ? 'text-[#26C6A6]' : 'text-[#EF5465]'
+                <span className={`text-[10px] font-mono tabular-nums opacity-55 ${
+                  (idx.change_5d ?? 0) >= 0 ? 'text-[#089981]' : 'text-[#F23645]'
                 }`}>
                   5d {fmtPct(idx.change_5d)}
                 </span>
@@ -38,8 +37,8 @@ export default function IndexBar() {
           )
         })}
         {!data && (
-          <span className="text-[#5C6480] animate-pulse text-xs font-mono py-1">
-            載入指數中...
+          <span className="text-[#787B86] animate-pulse text-[11px] font-mono py-1">
+            載入指數...
           </span>
         )}
       </div>

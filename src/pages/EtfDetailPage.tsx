@@ -33,10 +33,10 @@ export default function EtfDetailPage() {
   })
 
   if (isLoading) {
-    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#5C6480] animate-pulse font-mono">載入中...</div>
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#787B86] animate-pulse font-mono">載入中...</div>
   }
   if (!detail) {
-    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#EF5465]">找不到ETF。</div>
+    return <div className="max-w-7xl mx-auto px-4 py-10 text-[#F23645]">找不到ETF。</div>
   }
 
   const chartData = history?.data.map(d => ({ date: d.date, value: d.rs_rating })) ?? []
@@ -49,35 +49,35 @@ export default function EtfDetailPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
-      <div className="flex items-center gap-2 text-sm text-[#5C6480]">
-        <Link to="/etfs" className="hover:text-[#4E8AFF] transition-colors">ETF排名</Link>
+      <div className="flex items-center gap-2 text-sm text-[#787B86]">
+        <Link to="/etfs" className="hover:text-[#2962FF] transition-colors">ETF排名</Link>
         <span>/</span>
-        <span className="text-[#C8D1E8]">{detail.etf_ticker}</span>
+        <span className="text-[#D1D4DC]">{detail.etf_ticker}</span>
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div className="space-y-2">
-          <h1 className="text-2xl font-bold text-[#C8D1E8]">
+          <h1 className="text-2xl font-bold text-[#D1D4DC]">
             <span className="font-mono">{detail.etf_ticker}</span>
-            <span className="text-[#5C6480] text-lg ml-3">{detail.name}</span>
+            <span className="text-[#787B86] text-lg ml-3">{detail.name}</span>
           </h1>
           <div className="flex flex-wrap items-center gap-2">
             <RankBadge rank={detail.rs_rank} total={19} label="檔ETF" />
             <span className={`text-sm px-3 py-1 rounded font-mono font-bold ${rsColor(detail.rs_rating)}`}>
               RS {detail.rs_rating ?? '—'}
             </span>
-            <span className={`text-xs px-1.5 py-0.5 rounded font-mono border ${detail.group === 'thematic' ? 'bg-[#a78bfa]/10 text-[#a78bfa] border-[#a78bfa]/20' : 'bg-[#4E8AFF]/10 text-[#4E8AFF] border-[#4E8AFF]/20'}`}>
+            <span className={`text-xs px-1.5 py-0.5 rounded font-mono border ${detail.group === 'thematic' ? 'bg-[#a78bfa]/10 text-[#a78bfa] border-[#a78bfa]/20' : 'bg-[#2962FF]/10 text-[#2962FF] border-[#2962FF]/20'}`}>
               {detail.group === 'thematic' ? '主題型' : 'SPDR'}
             </span>
-            <span className="text-[#5C6480] text-xs font-mono">{fmtPrice(detail.price)}</span>
-            <span className="text-[#5C6480] text-xs">{detail.constituent_count} 支成分股</span>
+            <span className="text-[#787B86] text-xs font-mono">{fmtPrice(detail.price)}</span>
+            <span className="text-[#787B86] text-xs">{detail.constituent_count} 支成分股</span>
           </div>
         </div>
 
         <div className="flex gap-2 flex-wrap">
           {pills.map(p => (
-            <div key={p.label} className="px-3 py-2 text-center min-w-16 bg-[#1C2030] border border-[#252B3D]">
-              <div className="text-[10px] font-mono text-[#5C6480]">{p.label}</div>
+            <div key={p.label} className="px-3 py-2 text-center min-w-16 bg-[#252B3D] border border-[#2A2E39]">
+              <div className="text-[10px] font-mono text-[#787B86]">{p.label}</div>
               <div className={`font-mono font-bold text-sm ${pctColor(p.value)}`}>{fmtPct(p.value)}</div>
             </div>
           ))}
@@ -85,7 +85,7 @@ export default function EtfDetailPage() {
       </div>
 
       {ohlc && ohlc.bars.length > 0 && (
-        <div className="bg-[#131720] border border-[#252B3D] p-4">
+        <div className="bg-[#1E222D] border border-[#2A2E39] p-4">
           <h2 className="panel-label mb-3">
             價格 — 日線K棒
           </h2>
@@ -94,7 +94,7 @@ export default function EtfDetailPage() {
       )}
 
       {chartData.length > 0 && (
-        <div className="bg-[#131720] border border-[#252B3D] p-4">
+        <div className="bg-[#1E222D] border border-[#2A2E39] p-4">
           <h2 className="panel-label mb-3">
             90日 RS Rating
           </h2>

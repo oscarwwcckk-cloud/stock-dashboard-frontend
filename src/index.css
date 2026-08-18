@@ -1,38 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
 @import "tailwindcss";
 
-/* ── Design tokens: Futu × TradingView ─────────────────────────────────── */
+/* ── Design tokens: TradingView × Futu (Moomoo) ────────────────────────── */
 :root {
-  --tv-bg:       #0B0D13;
-  --tv-panel:    #131720;
-  --tv-raised:   #1C2030;
-  --tv-border:   #252B3D;
-  --tv-text:     #C8D1E8;
-  --tv-muted:    #5C6480;
-  --tv-blue:     #4E8AFF;
-  --tv-up:       #26C6A6;
-  --tv-down:     #EF5465;
-  --tv-orange:   #F5A623;
+  --tv-bg:       #131722;
+  --tv-panel:    #1E222D;
+  --tv-raised:   #252B3D;
+  --tv-border:   #2A2E39;
+  --tv-text:     #D1D4DC;
+  --tv-muted:    #787B86;
+  --tv-blue:     #2962FF;
+  --tv-up:       #089981;
+  --tv-down:     #F23645;
+  --tv-orange:   #FF9800;
 }
 
-/* ── Override Tailwind mono stack → JetBrains Mono ─────────────────────── */
+/* ── Font stacks ─────────────────────────────────────────────────────────── */
 @theme {
   --font-family-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', ui-monospace, monospace;
+  --font-family-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans TC', ui-sans-serif, system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
-  font-family: 'Inter', 'Noto Sans TC', ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Noto Sans TC', ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background-color: var(--tv-bg);
   color: var(--tv-text);
 }
 
+/* ── Tabular numerics: all mono + numeric elements ──────────────────────── */
+.font-mono,
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── TradingView-style scrollbar ────────────────────────────────────────── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--tv-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: var(--tv-border); border-radius: 2px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--tv-raised); }
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
@@ -40,9 +49,19 @@ html, body {
 
 /* ── Panel eyebrow label ─────────────────────────────────────────────────── */
 .panel-label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--tv-muted);
 }
+
+/* ── Stat row: compact table row with bottom divider ────────────────────── */
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--tv-border);
+}
+.stat-row:last-child { border-bottom: none; }

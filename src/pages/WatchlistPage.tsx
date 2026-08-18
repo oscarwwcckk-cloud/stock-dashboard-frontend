@@ -18,28 +18,28 @@ const TABS: { key: TabKey; label: string; desc: string }[] = [
 ]
 
 function pctCol(v: number | null | undefined) {
-  if (v == null) return 'text-[#5C6480]'
-  return v >= 0 ? 'text-[#26C6A6]' : 'text-[#EF5465]'
+  if (v == null) return 'text-[#787B86]'
+  return v >= 0 ? 'text-[#089981]' : 'text-[#F23645]'
 }
 
 function stateTag(state: string) {
-  if (state === 'BREAKOUT') return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#26C6A6]/10 text-[#26C6A6] border-[#26C6A6]/25 font-mono">突破</span>
-  if (state === 'COILED')   return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#F5A623]/10 text-[#F5A623] border-[#F5A623]/25 font-mono">待發</span>
-  if (state === 'FORMING')  return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#4E8AFF]/10 text-[#4E8AFF] border-[#4E8AFF]/25 font-mono">構建中</span>
-  return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#1C2030] text-[#5C6480] border-[#252B3D] font-mono">{state}</span>
+  if (state === 'BREAKOUT') return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#089981]/10 text-[#089981] border-[#089981]/25 font-mono">突破</span>
+  if (state === 'COILED')   return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#FF9800]/10 text-[#FF9800] border-[#FF9800]/25 font-mono">待發</span>
+  if (state === 'FORMING')  return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#2962FF]/10 text-[#2962FF] border-[#2962FF]/25 font-mono">構建中</span>
+  return <span className="text-xs px-1.5 py-0.5 rounded border bg-[#252B3D] text-[#787B86] border-[#2A2E39] font-mono">{state}</span>
 }
 
 function stars(n: number) {
-  return <span className="text-[#F5A623] text-xs">{'★'.repeat(n)}{'☆'.repeat(Math.max(0, 5 - n))}</span>
+  return <span className="text-[#FF9800] text-xs">{'★'.repeat(n)}{'☆'.repeat(Math.max(0, 5 - n))}</span>
 }
 
 // ── EP 表格 ────────────────────────────────────────────────────────────────
 function EpTable({ rows }: { rows: KqScannerResponse['ep'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -53,15 +53,15 @@ function EpTable({ rows }: { rows: KqScannerResponse['ep'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Gap%'])}`}>{r['Gap%'] != null ? `+${r['Gap%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#F5A623]">{r['Vol Multiple']}x</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['ADR 20%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#FF9800]">{r['Vol Multiple']}x</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['ADR 20%']?.toFixed(1)}%</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['3M Return%'])}`}>{fmtPct(r['3M Return%'])}</td>
             </tr>
@@ -76,9 +76,9 @@ function EpTable({ rows }: { rows: KqScannerResponse['ep'] }) {
 function HtfTable({ rows }: { rows: KqScannerResponse['htf'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -94,18 +94,18 @@ function HtfTable({ rows }: { rows: KqScannerResponse['htf'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Pole%'])}`}>{r['Pole%'] != null ? `+${r['Pole%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Pole Days']}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Flag Days']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Pole Days']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Flag Days']}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Flag Drawdown%'])}`}>{r['Flag Drawdown%'] != null ? `${r['Flag Drawdown%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Vol Contract%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#F5A623]">{r.Quality}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Vol Contract%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#FF9800]">{r.Quality}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
             </tr>
           ))}
@@ -119,9 +119,9 @@ function HtfTable({ rows }: { rows: KqScannerResponse['htf'] }) {
 function BreakoutTable({ rows }: { rows: KqScannerResponse['breakout'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -139,19 +139,19 @@ function BreakoutTable({ rows }: { rows: KqScannerResponse['breakout'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
               <td className="px-3 py-2">{stateTag(r.State)}</td>
               <td className="px-3 py-2">{stars(r.Stars)}</td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Prior Move%'])}`}>{r['Prior Move%'] != null ? `+${r['Prior Move%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Consol Days']}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Consol VolDryup%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#F5A623]">{r['Breakout VolX']?.toFixed(1)}x</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#EF5465]">{r['Stop%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Consol Days']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Consol VolDryup%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#FF9800]">{r['Breakout VolX']?.toFixed(1)}x</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#F23645]">{r['Stop%']?.toFixed(1)}%</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M%'])}`}>{fmtPct(r['1M%'])}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['3M%'])}`}>{fmtPct(r['3M%'])}</td>
             </tr>
@@ -166,9 +166,9 @@ function BreakoutTable({ rows }: { rows: KqScannerResponse['breakout'] }) {
 function VcpTable({ rows }: { rows: KqScannerResponse['vcp'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -185,18 +185,18 @@ function VcpTable({ rows }: { rows: KqScannerResponse['vcp'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#F5A623]">{r.Contractions}次</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Base Depth%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Final Depth%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#C8D1E8]">{fmtPrice(r.Pivot)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#FF9800]">{r.Contractions}次</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Base Depth%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Final Depth%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#D1D4DC]">{fmtPrice(r.Pivot)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Px vs Pivot%'])}`}>{r['Px vs Pivot%'] != null ? `${r['Px vs Pivot%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Vol Dryup%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Vol Dryup%']?.toFixed(1)}%</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['3M Return%'])}`}>{fmtPct(r['3M Return%'])}</td>
             </tr>
@@ -211,9 +211,9 @@ function VcpTable({ rows }: { rows: KqScannerResponse['vcp'] }) {
 function CwhTable({ rows }: { rows: KqScannerResponse['cwh'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -231,19 +231,19 @@ function CwhTable({ rows }: { rows: KqScannerResponse['cwh'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
               <td className="px-3 py-2">{stateTag(r.State)}</td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Cup Days']}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Cup Depth%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Handle Days']}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#C8D1E8]">{fmtPrice(r.Pivot)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Cup Days']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Cup Depth%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Handle Days']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#D1D4DC]">{fmtPrice(r.Pivot)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Px vs Pivot%'])}`}>{r['Px vs Pivot%'] != null ? `${r['Px vs Pivot%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#26C6A6]">{fmtPrice(r.Target)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#089981]">{fmtPrice(r.Target)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Potential%'])}`}>{r['Potential%'] != null ? `+${r['Potential%'].toFixed(1)}%` : '—'}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
             </tr>
@@ -258,9 +258,9 @@ function CwhTable({ rows }: { rows: KqScannerResponse['cwh'] }) {
 function DoubleBottomTable({ rows }: { rows: KqScannerResponse['double_bottom'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -278,19 +278,19 @@ function DoubleBottomTable({ rows }: { rows: KqScannerResponse['double_bottom'] 
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
               <td className="px-3 py-2">{stateTag(r.State)}</td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{fmtPrice(r['L1 Price'])}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{fmtPrice(r['L2 Price'])}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{fmtPrice(r['L1 Price'])}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{fmtPrice(r['L2 Price'])}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Bottom Diff%'])}`}>{r['Bottom Diff%'] != null ? `${r['Bottom Diff%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#C8D1E8]">{fmtPrice(r['Peak P (Neckline)'])}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#D1D4DC]">{fmtPrice(r['Peak P (Neckline)'])}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Rebound%'])}`}>{r['Rebound%'] != null ? `+${r['Rebound%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#C8D1E8]">{fmtPrice(r.Pivot)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#D1D4DC]">{fmtPrice(r.Pivot)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Px vs Pivot%'])}`}>{r['Px vs Pivot%'] != null ? `${r['Px vs Pivot%'].toFixed(1)}%` : '—'}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
             </tr>
@@ -305,9 +305,9 @@ function DoubleBottomTable({ rows }: { rows: KqScannerResponse['double_bottom'] 
 function IpoBaseTable({ rows }: { rows: KqScannerResponse['ipo_base'] }) {
   if (!rows.length) return <Empty />
   return (
-    <div className="overflow-x-auto border border-[#252B3D]">
+    <div className="overflow-x-auto border border-[#2A2E39]">
       <table className="w-full text-sm">
-        <thead className="bg-[#131720]">
+        <thead className="bg-[#1E222D]">
           <tr>
             <th className="px-4 py-3 text-left">#</th>
             <th className="px-4 py-3 text-left">代碼</th>
@@ -323,17 +323,17 @@ function IpoBaseTable({ rows }: { rows: KqScannerResponse['ipo_base'] }) {
         </thead>
         <tbody>
           {rows.map(r => (
-            <tr key={r.Ticker} className="border-t border-[#252B3D] hover:bg-[#1C2030] transition-colors">
-              <td className="px-4 py-2 text-[#5C6480] text-xs">{r.Rank}</td>
+            <tr key={r.Ticker} className="border-t border-[#2A2E39] hover:bg-[#252B3D] transition-colors">
+              <td className="px-4 py-2 text-[#787B86] text-xs">{r.Rank}</td>
               <td className="px-4 py-2">
-                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#C8D1E8] hover:text-[#4E8AFF] font-mono transition-colors">{r.Ticker}</Link>
+                <Link to={`/stock/${r.Ticker}`} className="font-bold text-[#D1D4DC] hover:text-[#2962FF] font-mono transition-colors">{r.Ticker}</Link>
               </td>
               <td className="px-3 py-2">{stateTag(r.State)}</td>
-              <td className="px-3 py-2 text-right font-mono text-[#C8D1E8]">{fmtPrice(r.Price)}</td>
+              <td className="px-3 py-2 text-right font-mono text-[#D1D4DC]">{fmtPrice(r.Price)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['IPO Decline%'])}`}>{r['IPO Decline%'] != null ? `${r['IPO Decline%'].toFixed(1)}%` : '—'}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Base Duration (bars)']}</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#5C6480]">{r['Vol Dryup%']?.toFixed(1)}%</td>
-              <td className="px-3 py-2 text-right font-mono text-xs text-[#C8D1E8]">{fmtPrice(r.Pivot)}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Base Duration (bars)']}</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#787B86]">{r['Vol Dryup%']?.toFixed(1)}%</td>
+              <td className="px-3 py-2 text-right font-mono text-xs text-[#D1D4DC]">{fmtPrice(r.Pivot)}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['Px vs Pivot%'])}`}>{r['Px vs Pivot%'] != null ? `${r['Px vs Pivot%'].toFixed(1)}%` : '—'}</td>
               <td className={`px-3 py-2 text-right font-mono text-xs ${pctCol(r['1M Return%'])}`}>{fmtPct(r['1M Return%'])}</td>
             </tr>
@@ -345,7 +345,7 @@ function IpoBaseTable({ rows }: { rows: KqScannerResponse['ipo_base'] }) {
 }
 
 function Empty() {
-  return <div className="text-[#5C6480] text-sm px-4 py-6 font-mono">今日掃描無符合條件的股票。</div>
+  return <div className="text-[#787B86] text-sm px-4 py-6 font-mono">今日掃描無符合條件的股票。</div>
 }
 
 export default function WatchlistPage() {
@@ -383,7 +383,7 @@ export default function WatchlistPage() {
       {isLoading && <div className="text-slate-500 animate-pulse text-sm">載入篩選結果中...</div>}
 
       {error && (
-        <div className="text-[#EF5465] text-sm bg-red-950 border border-red-800 rounded-lg px-4 py-3">
+        <div className="text-[#F23645] text-sm bg-red-950 border border-red-800 rounded-lg px-4 py-3">
           載入KQ篩選資料失敗。
         </div>
       )}
@@ -396,14 +396,14 @@ export default function WatchlistPage() {
             onClick={() => setTab(t.key)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${
               tab === t.key
-                ? 'bg-amber-500/20 text-[#F5A623] border border-amber-500/40'
-                : 'text-[#5C6480] bg-slate-800 border border-slate-700 hover:text-white'
+                ? 'bg-amber-500/20 text-[#FF9800] border border-amber-500/40'
+                : 'text-[#787B86] bg-slate-800 border border-slate-700 hover:text-white'
             }`}
           >
             {t.label}
             {data && (
               <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                tab === t.key ? 'bg-amber-500/30 text-amber-300' : 'bg-slate-700 text-[#5C6480]'
+                tab === t.key ? 'bg-amber-500/30 text-amber-300' : 'bg-slate-700 text-[#787B86]'
               }`}>
                 {counts[t.key]}
               </span>
@@ -414,7 +414,7 @@ export default function WatchlistPage() {
 
       {/* Tab description */}
       {data && (
-        <div className="text-[#5C6480] text-xs border-l-2 border-slate-700 pl-3">
+        <div className="text-[#787B86] text-xs border-l-2 border-slate-700 pl-3">
           {activeTab.desc}
         </div>
       )}
